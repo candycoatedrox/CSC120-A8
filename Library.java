@@ -4,15 +4,35 @@ import java.util.Set;
 public class Library extends Building implements LibraryRequirements {
 
     private Hashtable<String, Boolean> collection;
+    private boolean hasElevator;
 
     /**
      * Constructor
      */
+    public Library(String name, String address, int nFloors, boolean hasElevator) {
+        super(name, address, nFloors);
+        this.collection = new Hashtable<>();
+        this.hasElevator = hasElevator;
+
+        System.out.println("You have built a library: 📖");
+    }
+
+    /**
+     * Constructor, assuming this Library has an elevator by default
+     */
     public Library(String name, String address, int nFloors) {
         super(name, address, nFloors);
         this.collection = new Hashtable<>();
+        this.hasElevator = true;
 
         System.out.println("You have built a library: 📖");
+    }
+
+    /**
+     * Accessor for hasElevator
+     */
+    public boolean hasElevator() {
+        return this.hasElevator;
     }
 
     /**
@@ -117,8 +137,34 @@ public class Library extends Building implements LibraryRequirements {
         }
     }
 
+    /**
+     * Prints out the options available to the user while in this Library
+     */
+    @Override
+    public void showOptions() {
+        super.showOptions();
+        System.out.println(" + addTitle(title) \n + removeTitle(title) \n + checkOut(title) \n + returnBook(title) \n + printCollection()");
+    }
+
+    /**
+     * Moves to another floor in this Library
+     */
+    @Override
+    public void goToFloor(int floorNum) {
+        if (!this.hasElevator) {
+            if (floorNum < this.activeFloor - 1 || floorNum > this.activeFloor + 1) {
+                throw new RuntimeException("You can only move to an adjacent floor. You are currently on floor " + this.activeFloor + ".");
+            }
+        }
+
+        super.goToFloor(floorNum);
+    }
+
     public static void main(String[] args) {
-        Library myLibrary = new Library("Neilson Library", "1 Chapin Way", 4);
+        Library myLibrary = new Library("Neilson Library", "1 Chapin Way", 4, true);
+        System.out.println(myLibrary);
+        myLibrary.showOptions();
+
         myLibrary.addTitle("The Great Gatsby");
         myLibrary.addTitle("Calling In");
         myLibrary.addTitle("The House in the Cerulean Sea");

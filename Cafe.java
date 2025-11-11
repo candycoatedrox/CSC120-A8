@@ -76,9 +76,33 @@ public class Cafe extends Building implements CafeRequirements {
             this.nCups = this.maxCups;
         }
     }
+
+    /**
+     * Prints out the options available to the user while in this Cafe
+     */
+    @Override
+    public void showOptions() {
+        super.showOptions();
+        System.out.println(" + sellCoffee(size, nSugarPackets, nCreams)");
+    }
+
+    /**
+     * Moves to an adjacent floor in this Cafe
+     */
+    @Override
+    public void goToFloor(int floorNum) {
+        if (floorNum < this.activeFloor - 1 || floorNum > this.activeFloor + 1) {
+            throw new RuntimeException("You can only move to an adjacent floor. You are currently on floor " + this.activeFloor + ".");
+        }
+
+        super.goToFloor(floorNum);
+    }
     
     public static void main(String[] args) {
         Cafe myCafe = new Cafe("Starbucks", "1 Chapin Way", 1, 20, 40, 40, 15);
+        System.out.println(myCafe);
+        myCafe.showOptions();
+
         System.out.println(myCafe.getName() + " stock: " + myCafe.nCoffeeOunces + "oz coffee, " + myCafe.nSugarPackets + " sugar packets, " + myCafe.nCreams + " creams, " + myCafe.nCups + " cups");
         myCafe.sellCoffee(3, 2, 2);
         System.out.println(myCafe.getName() + " stock: " + myCafe.nCoffeeOunces + "oz coffee, " + myCafe.nSugarPackets + " sugar packets, " + myCafe.nCreams + " creams, " + myCafe.nCups + " cups");

@@ -4,14 +4,29 @@ public class House extends Building implements HouseRequirements {
 
     private ArrayList<Student> residents;
     private boolean hasDiningRoom;
+    private boolean hasElevator;
 
     /**
      * Constructor
      */
-    public House(String name, String address, int nFloors, boolean hasDiningRoom) {
+    public House(String name, String address, int nFloors, boolean hasDiningRoom, boolean hasElevator) {
         super(name, address, nFloors);
         this.residents = new ArrayList<>();
         this.hasDiningRoom = hasDiningRoom;
+        this.hasElevator = hasElevator;
+
+        // The little print statements in the constructors are so cute, I can't bear to get rid of them
+        System.out.println("You have built a house: 🏠");
+    }
+
+    /**
+     * Constructor, assuming this House has no dining room or elevator by default
+     */
+    public House(String name, String address, int nFloors) {
+        super(name, address, nFloors);
+        this.residents = new ArrayList<>();
+        this.hasDiningRoom = false;
+        this.hasElevator = false;
 
         // The little print statements in the constructors are so cute, I can't bear to get rid of them
         System.out.println("You have built a house: 🏠");
@@ -22,6 +37,13 @@ public class House extends Building implements HouseRequirements {
      */
     public boolean hasDiningRoom() {
         return this.hasDiningRoom;
+    }
+
+    /**
+     * Accessor for hasElevator
+     */
+    public boolean hasElevator() {
+        return this.hasElevator;
     }
 
     /**
@@ -68,13 +90,38 @@ public class House extends Building implements HouseRequirements {
         return this.residents.contains(s);
     }
 
+    /**
+     * Prints out the options available to the user while in this House
+     */
+    @Override
+    public void showOptions() {
+        super.showOptions();
+        System.out.println(" + moveIn(Student) \n + moveOut(Student)");
+    }
+
+    /**
+     * Moves to another floor in this House
+     */
+    @Override
+    public void goToFloor(int floorNum) {
+        if (!this.hasElevator) {
+            if (floorNum < this.activeFloor - 1 || floorNum > this.activeFloor + 1) {
+                throw new RuntimeException("You can only move to an adjacent floor. You are currently on floor " + this.activeFloor + ".");
+            }
+        }
+
+        super.goToFloor(floorNum);
+    }
+
     public static void main(String[] args) {
         Student piper = new Student("Piper Wurman", "9912345", 2029);
         Student scout = new Student("Scout Bookham", "9987765", 2029);
-        House myHouse = new House("Ziskind House", "1 Chapin Way", 3, true);
+        House myHouse = new House("Ziskind House", "1 Chapin Way", 3, true, true);
 
-        System.out.println(myHouse.getName() + ", " + myHouse.getAddress() + ", " + myHouse.getFloors() + " floors, hasDiningRoom = " + myHouse.hasDiningRoom());
+        System.out.println(myHouse);
+        System.out.println(myHouse.getName() + " has a dining room: " + myHouse.hasDiningRoom());
         System.out.println(myHouse.nResidents() + " residents");
+        myHouse.showOptions();
 
         System.out.println(myHouse.isResident(piper));
         myHouse.moveIn(piper);
