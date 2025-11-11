@@ -105,8 +105,8 @@ public class Cafe extends Building implements CafeRequirements {
      */
     @Override
     public void goToFloor(int floorNum) {
-        if (floorNum < this.activeFloor - 1 || floorNum > this.activeFloor + 1) {
-            throw new RuntimeException("You can only move to an adjacent floor. You are currently on floor " + this.activeFloor + ".");
+        if (floorNum != 1) {
+            throw new RuntimeException("You cannot go above the first floor. Other floors are only accessible to employees.");
         }
 
         super.goToFloor(floorNum);

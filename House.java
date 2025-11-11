@@ -101,7 +101,7 @@ public class House extends Building implements HouseRequirements {
     @Override
     public void showOptions() {
         super.showOptions();
-        System.out.println(" + moveIn(Student) \n + moveOut(Student)");
+        System.out.println(" + moveIn(Student) \n + moveIn(students) \n + moveOut(Student)");
     }
 
     /**
