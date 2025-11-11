@@ -36,7 +36,7 @@ public class Cafe extends Building implements CafeRequirements {
      */
     public void sellCoffee(int size, int nSugarPackets, int nCreams) {
         if (this.nCoffeeOunces < size || this.nSugarPackets < nSugarPackets || this.nCreams < nCreams || this.nCups < 1) {
-            this.restock(15, 30, 30, 10);
+            this.restock();
             // calls sellCoffee recursively, so that if there *still* aren't
             // enough ingredients (somehow), the cafe is restocked again
             this.sellCoffee(size, nSugarPackets, nCreams);
@@ -46,6 +46,13 @@ public class Cafe extends Building implements CafeRequirements {
             this.nCreams -= nCreams;
             this.nCups -= 1;
         }
+    }
+
+    /**
+     * Sells one "basic" cup of coffee with default ingredients
+     */
+    public void sellCoffee() {
+        this.sellCoffee(10, 2, 2);
     }
 
     /**
@@ -78,12 +85,19 @@ public class Cafe extends Building implements CafeRequirements {
     }
 
     /**
-     * Prints out the options available to the user while in this Cafe
+     * Restocks this Cafe with a default amount of inventory
+     */
+    private void restock() {
+        this.restock(40, 30, 30, 10);
+    }
+
+    /**
+     * Prints out the options available to the user in this Cafe
      */
     @Override
     public void showOptions() {
         super.showOptions();
-        System.out.println(" + sellCoffee(size, nSugarPackets, nCreams)");
+        System.out.println(" + sellCoffee(size, nSugarPackets, nCreams) \n + sellCoffee()");
     }
 
     /**
@@ -99,7 +113,7 @@ public class Cafe extends Building implements CafeRequirements {
     }
     
     public static void main(String[] args) {
-        Cafe myCafe = new Cafe("Starbucks", "1 Chapin Way", 1, 20, 40, 40, 15);
+        Cafe myCafe = new Cafe("Starbucks", "1 Chapin Way", 1, 60, 40, 40, 15);
         System.out.println(myCafe);
         myCafe.showOptions();
 

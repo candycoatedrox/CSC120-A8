@@ -23,13 +23,7 @@ public class House extends Building implements HouseRequirements {
      * Constructor, assuming this House has no dining room or elevator by default
      */
     public House(String name, String address, int nFloors) {
-        super(name, address, nFloors);
-        this.residents = new ArrayList<>();
-        this.hasDiningRoom = false;
-        this.hasElevator = false;
-
-        // The little print statements in the constructors are so cute, I can't bear to get rid of them
-        System.out.println("You have built a house: 🏠");
+        this(name, address, nFloors, false, false);
     }
 
     /**
@@ -68,6 +62,17 @@ public class House extends Building implements HouseRequirements {
     }
 
     /**
+     * Adds several new residents to this House
+     * @param students an array of Students moving in to this House
+     * @throws RuntimeException if any of the Students are already a resident of this House
+     */
+    public void moveIn(Student[] students) {
+        for (Student s : students) {
+            this.moveIn(s);
+        }
+    }
+
+    /**
      * Removes a resident from this House
      * @param s the Student moving out of this House
      * @throws RuntimeException if the Student is not a resident of this House
@@ -91,7 +96,7 @@ public class House extends Building implements HouseRequirements {
     }
 
     /**
-     * Prints out the options available to the user while in this House
+     * Prints out the options available to the user in this House
      */
     @Override
     public void showOptions() {

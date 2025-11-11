@@ -21,11 +21,7 @@ public class Library extends Building implements LibraryRequirements {
      * Constructor, assuming this Library has an elevator by default
      */
     public Library(String name, String address, int nFloors) {
-        super(name, address, nFloors);
-        this.collection = new Hashtable<>();
-        this.hasElevator = true;
-
-        System.out.println("You have built a library: 📖");
+        this(name, address, nFloors, true);
     }
 
     /**
@@ -76,6 +72,17 @@ public class Library extends Building implements LibraryRequirements {
             }
         } else {
             throw new RuntimeException("Title not in collection");
+        }
+    }
+
+    /**
+     * Checks out several books from this Library
+     * @param titles an array of titles to check out
+     * @throws RuntimeException if any of the titles are not in this Library's collection or are already checked out
+     */
+    public void checkOut(String[] titles) {
+        for (String title : titles) {
+            this.checkOut(title);
         }
     }
 
@@ -138,7 +145,7 @@ public class Library extends Building implements LibraryRequirements {
     }
 
     /**
-     * Prints out the options available to the user while in this Library
+     * Prints out the options available to the user in this Library
      */
     @Override
     public void showOptions() {
