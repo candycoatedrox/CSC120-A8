@@ -29,6 +29,13 @@ public class Cafe extends Building implements CafeRequirements {
     }
 
     /**
+     * Constructor, using default values for starting/max inventory
+     */
+    public Cafe(String name, String address, int nFloors) {
+        this(name, address, nFloors, 60, 40, 40, 15);
+    }
+
+    /**
      * Sells one cup of coffee with the given ingredients
      * @param size the number of coffee ounces in the order
      * @param nSugarPackets the number of sugar packets in the order
@@ -46,13 +53,6 @@ public class Cafe extends Building implements CafeRequirements {
             this.nCreams -= nCreams;
             this.nCups -= 1;
         }
-    }
-
-    /**
-     * Sells one "basic" cup of coffee with default ingredients
-     */
-    public void sellCoffee() {
-        this.sellCoffee(10, 2, 2);
     }
 
     /**

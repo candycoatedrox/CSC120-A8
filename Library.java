@@ -45,6 +45,17 @@ public class Library extends Building implements LibraryRequirements {
     }
 
     /**
+     * Adds several books to this Library's collection
+     * @param titles an array of titles to add to the collection
+     * @throws RuntimeException if any of the titles are already in this Library's collection
+     */
+    public void addTitle(String[] titles) {
+        for (String title : titles) {
+            this.addTitle(title);
+        }
+    }
+
+    /**
      * Removes a book from this Library's collection
      * @param title the title of the book being removed from the collection
      * @throws RuntimeException if the title is not in this Library's collection
@@ -133,11 +144,12 @@ public class Library extends Building implements LibraryRequirements {
         int n = 1;
         Set<String> titles = this.collection.keySet();
 
+        System.out.println(this.getName() + "'s Collection:");
         for (String title : titles) {
             if (this.isAvailable(title)) {
-                System.out.println(n + ". " + title + " (available)");
+                System.out.println("  " + n + ". " + title + " (available)");
             } else {
-                System.out.println(n + ". " + title + " (checked out)");
+                System.out.println("  " + n + ". " + title + " (checked out)");
             }
 
             n += 1;
